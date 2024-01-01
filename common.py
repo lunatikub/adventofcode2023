@@ -21,10 +21,13 @@ def parse_args() -> Namespace:
                         help='Enable debug mode')
     parser.add_argument('--input',
                         type=str,
-                        help='Input file')
+                        help='Input file',
+                        required=True)
     parser.add_argument('--part',
                         type=int,
-                        help='Part 1 or 2')
+                        choices=[1, 2],
+                        help='Part of the day',
+                        required=True)
     args = parser.parse_args()
     return args
 
