@@ -8,6 +8,7 @@ from common import get_lines, parse_args, set_debug
 
 import re
 
+# Dictionary specifying cube limits for each color
 cube_limits = {
     "red": 12,
     "green": 13,
@@ -17,6 +18,7 @@ cube_limits = {
 
 def parse_game(input_string) -> list[dict[str, int]]:
     """
+    Parse the game configuration from an input string.
     in: "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
     out: [
            {'blue': 3, 'red': 4},
@@ -36,6 +38,10 @@ def parse_game(input_string) -> list[dict[str, int]]:
 
 
 def check_cube_limit(set: dict[str, int], color: str) -> bool:
+    """
+    Check if the number of cubes of a specific
+    color is within the limit.
+    """
     cubes = set.get(color, 0)
     if cubes > cube_limits[color]:
         ic(f"Not enough {color} cubes ({cubes} > {cube_limits[color]})")
@@ -44,15 +50,21 @@ def check_cube_limit(set: dict[str, int], color: str) -> bool:
 
 
 def game_is_possible(game: list[dict[str, int]]) -> bool:
+    """
+    Check if the game configuration is feasible based on cube limits.
+    """
     for set in game:
         ic(set)
         for color in cube_limits.keys():
-            if (check_cube_limit(set, color) is False):
+            if check_cube_limit(set, color) is False:
                 return False
     return True
 
 
 def get_min(set: dict[str, int], color: str, current_min: int) -> int:
+    """
+    Get the minimum count of cubes needed of a specific color.
+    """
     n = set.get(color, 0)
     ic(f"color: {color}: {n} > {current_min}")
     if n > current_min:
@@ -61,6 +73,10 @@ def get_min(set: dict[str, int], color: str, current_min: int) -> int:
 
 
 def get_min_cubes(game: list[dict[str, int]]) -> int:
+    """
+    Calculate the product of minimum cube counts
+    for each color in the game.
+    """
     min_blue, min_red, min_green = 0, 0, 0
     for set in game:
         ic(set)
@@ -76,23 +92,19 @@ def main():
     lines = ic(get_lines(args.input))
 
     id = 1
-    res_1 = 0
-    res_2 = 0
+    res = 0
     for line in lines:
         ic(line)
         game = ic(parse_game(line))
 
         if args.part == 1:
-            if (ic(game_is_possible(game))):
-                res_1 += id
+            if game_is_possible(game):
+                res += id
         else:
-            res_2 += get_min_cubes(game)
+            res += get_min_cubes(game)
         id += 1
 
-    if args.part == 1:
-        print(res_1)
-    else:
-        print(res_2)
+    print(res)
 
 
 if __name__ == "__main__":

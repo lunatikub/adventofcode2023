@@ -30,9 +30,12 @@ digit_mapping_part_2 = {
     "nine": 9, "9": 9,
 }
 
-
 def get_digit(sub_string: str,
               digit_mapping: dict[str, int]) -> int:
+    """
+    Get the corresponding digit for a given substring
+    based on a digit mapping.
+    """
     for k, v in digit_mapping.items():
         if sub_string.startswith(k):
             return v
@@ -41,6 +44,10 @@ def get_digit(sub_string: str,
 
 def find_first_digit_from_start(input_string: str,
                                 digit_mapping: dict[str, int]) -> int:
+    """
+    Find the first digit from the start of the input string
+    using the provided digit mapping.
+    """
     for i in range(len(input_string)):
         d = get_digit(input_string[i:], digit_mapping)
         if d != 0:
@@ -50,6 +57,10 @@ def find_first_digit_from_start(input_string: str,
 
 def find_first_digit_from_end(input_string: str,
                               digit_mapping: dict[str, int]) -> int:
+    """
+    Find the first digit from the end of the input string
+    using the provided digit mapping.
+    """
     for i in range(len(input_string), -1, -1):
         d = get_digit(input_string[i:], digit_mapping)
         if d != 0:
@@ -62,12 +73,17 @@ def main():
     set_debug(args.debug)
     lines = ic(get_lines(args.input))
 
+    # Choose the mapping based on the part.
     if args.part == 1:
         digit_mapping = digit_mapping_part_1
     else:
         digit_mapping = digit_mapping_part_2
     ic(digit_mapping)
     sum = 0
+    # Iterate over each line in 'lines', find the first digit
+    # from the start and end of each line,
+    # perform a calculation, accumulate the results,
+    # and print the final sum
     for line in lines:
         ic(line)
         sd = ic(find_first_digit_from_start(line, digit_mapping))

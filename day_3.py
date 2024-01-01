@@ -10,6 +10,10 @@ from common import get_current_function_name, get_lines, parse_args, set_debug
 
 
 def get_number(lines, sz, y, x) -> int:
+    """
+    Extracts a number from the lines[y][x] position
+    by finding its start and end indices.
+    """
     ic(f"{get_current_function_name()}: ({y}, {x})")
     x_start, x_end = x, x
     while x_start >= 0 and lines[y][x_start - 1].isdigit():
@@ -21,6 +25,10 @@ def get_number(lines, sz, y, x) -> int:
 
 
 def get_adjacent_symbol_from_number(lines, sz, y, x_start) -> tuple[int, int]:
+    """
+    Try to find an adjacent symbol to a number at position lines[y][x_start].
+    If found returns the number and the new x position to continue.
+    """
     x_end = x_start
     while x_end < sz and lines[y][x_end].isdigit():
         x_end += 1
@@ -38,6 +46,10 @@ def get_adjacent_symbol_from_number(lines, sz, y, x_start) -> tuple[int, int]:
 
 
 def get_2_adjacent_numbers_from_star(lines, sz, y, x) -> int:
+    """
+    Finds two adjacent numbers around the '*' symbol at
+    position lines[y][x] and calculates their product.
+    """
     numbers = []
     ic(f"{get_current_function_name()}: ({y}, {x})")
     for yy in range(y - 1, y + 2):
