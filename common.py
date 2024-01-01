@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import inspect
 from argparse import ArgumentParser, Namespace
 
 from icecream import ic
@@ -34,3 +35,9 @@ def set_debug(enable: bool) -> None:
         ic.enable()
 
 
+def lines_to_grid(list_of_strings: list[str]) -> list[list[str]]:
+    return [[char for char in string] for string in list_of_strings]
+
+
+def get_current_function_name():
+    return inspect.currentframe().f_back.f_code.co_name
